@@ -36,3 +36,17 @@ print(" Is Armable?: %s" % vehicle.is_armable)
 print(" System status: %s" % vehicle.system_status.state)
 print(" Airspeed: %s" % vehicle.airspeed)    # settable
 print(" Mode: %s" % vehicle.mode.name)    # settable
+
+# Check that vehicle is armable
+while not vehicle.is_armable:
+    print(" Waiting for vehicle to initialise...")
+    time.sleep(1)
+    # If required, you can provide additional information about initialisation
+    # using `vehicle.gps_0.fix_type` and `vehicle.mode.name`.
+    
+#print "\nSet Vehicle.armed=True (currently: %s)" % vehicle.armed 
+vehicle.armed = True
+while not vehicle.armed:
+    print (" Waiting for arming...")
+    time.sleep(1)
+print (" Vehicle is armed: %s" % vehicle.armed) 
