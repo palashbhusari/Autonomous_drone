@@ -47,7 +47,7 @@ while not vehicle.mode.name=='GUIDED':  #Wait until mode has changed
 
 print(" Mode: %s" % vehicle.mode.name)
 
-# Check that vehicle is armable
+### Check that vehicle is armable
 ##while not vehicle.is_armable:
 ##    print(" Waiting for vehicle to initialise...")
 ##    time.sleep(1)
@@ -55,7 +55,9 @@ print(" Mode: %s" % vehicle.mode.name)
     # using `vehicle.gps_0.fix_type` and `vehicle.mode.name`.   
 #print "\nSet Vehicle.armed=True (currently: %s)" % vehicle.armed 
 
-##Arm vehicle
+##-----------------Arm vehicle----------------------
+print("Arming......................")
+time.sleep(2)
 vehicle.armed = True
 while not vehicle.armed:
     print (" Waiting for arming...")
@@ -63,26 +65,21 @@ while not vehicle.armed:
 print (" Vehicle is armed: %s" % vehicle.armed)
 
 
-###----------------take off
-print("Taking off!")
+###----------------take off--------------------------------
+print("Taking off!  in 5")
+time.sleep(5)
 vehicle.simple_takeoff(aTargetAltitude) # Take off to target altitude
-  
-time.sleep(10) ###    TEST
+while True:
+        print(" Altitude: ", vehicle.location.global_relative_frame.alt)
+        # Break and return from function just below target altitude.
+        if vehicle.location.global_relative_frame.alt >= aTargetAltitude * 0.95:
+            print("Reached target altitude")
+            break
+        time.sleep(1)
+
 print('Return to launch')
-vehicle.mode = VehicleMode("RTL")
-
-#while True:
-#        print(" Altitude: ", vehicle.location.global_relative_frame.alt)      
-#        if vehicle.location.global_relative_frame.alt>=aTargetAltitude*0.95: #Trigger just below target alt.
-#            print("Reached target altitude")
-#            time.sleep(2)
-#            print('Return to launch')
-#            vehicle.mode = VehicleMode("RTL")
-#        time.sleep(1)
-
-
-###--------------------------------------
-
+vehicle.mode = VehicleMode("LAND")
+time.sleep(1)
 
 
 #Close vehicle object before exiting script
